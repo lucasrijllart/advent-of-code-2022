@@ -62,14 +62,14 @@ func read_file(file_path string) string {
 
 func d1() {
 	// file_path := "aoc/d1/test1.txt"
-	file_path := "aoc/submission.txt"
+	file_path := "aoc/d1/submission.txt"
 	// fmt.Println(string(file))
 	max_cal := find_max_cal(read_file(file_path))
 	fmt.Println(max_cal)
 }
 
 func d2() {
-	file_path := "aoc/submission.txt"
+	file_path := "aoc/d1/submission.txt"
 	top_three := find_top_three((read_file(file_path)))
 	fmt.Println(top_three)
 }
