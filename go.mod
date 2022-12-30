@@ -1,3 +1,3 @@
-module aoc/d1/d1
+module aoc
 
 go 1.19
