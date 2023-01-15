@@ -6,6 +6,9 @@ import (
 	"strings"
 )
 
+// Used to get item value in GetItemPriority
+const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
 // split a string in two using the middle point
 func SplitString(input string) []string {
 	half := len(input) / 2
@@ -27,9 +30,7 @@ func FindCommonItem(input1 string, input2 string) string {
 // given the value scheme for letters, I think this is a good way of getting the value
 // rather than storing every letter in a struct
 func GetItemPriority(item string) int {
-	alphabet := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	value := strings.Index(alphabet, item)
-	return value + 1 // offset as a=1 and not 0
+	return strings.Index(alphabet, item) + 1 // offset as a=1 and not 0
 }
 
 // calculate total duplicate item value in each rucksack
