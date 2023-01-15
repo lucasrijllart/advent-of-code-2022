@@ -2,12 +2,19 @@ package main
 
 import "testing"
 
+// ensure the strings given get split in two and returned as
+// the first and second items in a slice
 func TestSplitString(t *testing.T) {
 	tests := []struct {
 		input   string
 		output1 string
 		output2 string
 	}{
+		{
+			input:   "abcd",
+			output1: "ab",
+			output2: "cd",
+		},
 		{
 			input:   "vJrwpWtwJgWrhcsFMMfFFhFp",
 			output1: "vJrwpWtwJgWr",
@@ -31,12 +38,18 @@ func TestSplitString(t *testing.T) {
 	}
 }
 
+// ensure the function returns the character that appears in both strings
 func TestFindCommonItem(t *testing.T) {
 	tests := []struct {
 		input1   string
 		input2   string
 		expected string
 	}{
+		{
+			input1:   "abc",
+			input2:   "cde",
+			expected: "c",
+		},
 		{
 			input1:   "vJrwpWtwJgWr",
 			input2:   "hcsFMMfFFhFp",
