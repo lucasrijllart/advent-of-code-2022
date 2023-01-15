@@ -1,49 +1,46 @@
 package main
 
-import "testing"
+import (
+	"fmt"
+	"reflect"
+	"testing"
+)
 
 // ensure the strings given get split in two and returned as
 // the first and second items in a slice
 func TestSplitString(t *testing.T) {
 	tests := []struct {
-		input   string
-		output1 string
-		output2 string
+		input  string
+		output []string
 	}{
 		{
-			input:   "abcd",
-			output1: "ab",
-			output2: "cd",
+			input:  "abcd",
+			output: []string{"ab", "cd"},
 		},
 		{
-			input:   "vJrwpWtwJgWrhcsFMMfFFhFp",
-			output1: "vJrwpWtwJgWr",
-			output2: "hcsFMMfFFhFp",
+			input:  "vJrwpWtwJgWrhcsFMMfFFhFp",
+			output: []string{"vJrwpWtwJgWr", "hcsFMMfFFhFp"},
 		},
 		{
-			input:   "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
-			output1: "jqHRNqRjqzjGDLGL",
-			output2: "rsFMfFZSrLrFZsSL",
+			input:  "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+			output: []string{"jqHRNqRjqzjGDLGL", "rsFMfFZSrLrFZsSL"},
 		},
 	}
 
 	for _, test := range tests {
-		result := SplitString(test.input)
-		if result[0] != test.output1 {
-			t.Errorf("Got %s, expected %s", result, test.output1)
-		}
-		if result[1] != test.output2 {
-			t.Errorf("Got %s, expected %s", result, test.output2)
-		}
+		t.Run(fmt.Sprint(test.input), func(t *testing.T) {
+			result := SplitString(test.input)
+			if reflect.DeepEqual(result, test.output) == false {
+				t.Errorf("Got %s, expected %s", result, test.output)
+			}
+		})
 	}
 }
 
 // ensure the function returns the character that appears in both strings
 func TestFindCommonItem(t *testing.T) {
 	tests := []struct {
-		input1   string
-		input2   string
-		expected string
+		input1, input2, expected string
 	}{
 		{
 			input1:   "abc",
@@ -63,13 +60,15 @@ func TestFindCommonItem(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result := FindCommonItem(test.input1, test.input2)
-		if result != test.expected {
-			t.Errorf("Got %s, expected %s", result, test.expected)
-		}
+		t.Run(fmt.Sprint(test.input1, test.input2), func(t *testing.T) {
+			if result := FindCommonItem(test.input1, test.input2); result != test.expected {
+				t.Errorf("Got %s, expected %s", result, test.expected)
+			}
+		})
 	}
 }
 
+// ensure every letter in the alphabet is given the correct value
 func TestGetItemPriority(t *testing.T) {
 	tests := []struct {
 		input    string
@@ -84,13 +83,16 @@ func TestGetItemPriority(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result := GetItemPriority(test.input)
-		if result != test.expected {
-			t.Errorf("Got %d, expected %d", result, test.expected)
-		}
+		t.Run(fmt.Sprint(test.input), func(t *testing.T) {
+			result := GetItemPriority(test.input)
+			if result != test.expected {
+				t.Errorf("Got %d, expected %d", result, test.expected)
+			}
+		})
 	}
 }
 
+// ensure the example rucksacks given equals the expected value
 func TestGetTotalItemValue(t *testing.T) {
 	tests := []struct {
 		input    []string
