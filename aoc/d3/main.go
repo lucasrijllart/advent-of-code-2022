@@ -3,7 +3,9 @@ package main
 import (
 	"bufio"
 	"errors"
+	"flag"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 )
@@ -61,11 +63,14 @@ func p2() {
 
 // main function to run the function given as argument
 func main() {
-	function_name := os.Args[1]
-	fmt.Println(function_name)
-	funcs := map[string]func(){
-		"p1": p1,
-		"p2": p2,
+	functionFlag := flag.String("func", "p1", "The function to call")
+	flag.Parse()
+	switch *functionFlag {
+	case "p1":
+		p1()
+	case "p2":
+		p2()
+	default:
+		log.Fatal("Provide an existing function dammit")
 	}
-	funcs[function_name]()
 }
