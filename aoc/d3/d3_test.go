@@ -93,26 +93,21 @@ func TestGetItemPriority(t *testing.T) {
 }
 
 // ensure the example rucksacks given equals the expected value
-func TestGetTotalItemValue(t *testing.T) {
+func TestGetRucksackDuplicateValue(t *testing.T) {
 	tests := []struct {
-		input    []string
+		input    string
 		expected int
 	}{
-		{
-			input: []string{
-				"vJrwpWtwJgWrhcsFMMfFFhFp",
-				"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
-				"PmmdzqPrVvPwwTWBwg",
-				"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
-				"ttgJtRGJQctTZtZT",
-				"CrZsJsPPZsGzwwsLwLmpwMDw",
-			},
-			expected: 157,
-		},
+		{"vJrwpWtwJgWrhcsFMMfFFhFp", 16},
+		{"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL", 38},
+		{"PmmdzqPrVvPwwTWBwg", 42},
+		{"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn", 22},
+		{"ttgJtRGJQctTZtZT", 20},
+		{"CrZsJsPPZsGzwwsLwLmpwMDw", 19},
 	}
 
 	for _, test := range tests {
-		result := GetTotalItemValue(test.input)
+		result := GetRucksackDuplicateValue(test.input)
 		if result != test.expected {
 			t.Errorf("Got %d, expected %d", result, test.expected)
 		}
