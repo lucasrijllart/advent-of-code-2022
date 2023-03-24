@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -17,14 +18,13 @@ func SplitString(input string) []string {
 }
 
 // find the character that exists in two strings
-func FindCommonItem(input1 string, input2 string) string {
-	var result string
-	for _, item := range input1 {
-		if i := strings.Index(input2, string(item)); i != -1 {
-			result = string(item)
+func FindCommonItem(left, right string) (string, error) {
+	for _, rune := range left {
+		if strings.ContainsRune(right, rune) {
+			return string(rune), nil
 		}
 	}
-	return result
+	return "", errors.New("unable to find common item")
 }
 
 // return the item priority
@@ -35,7 +35,7 @@ func GetItemPriority(item string) int {
 // calculate total duplicate item value in each rucksack
 func GetRucksackDuplicateValue(rucksack string) int {
 	compartments := SplitString(rucksack)
-	common_item := FindCommonItem(compartments[0], compartments[1])
+	common_item, _ := FindCommonItem(compartments[0], compartments[1])
 	return GetItemPriority(common_item)
 }
 

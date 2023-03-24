@@ -61,8 +61,28 @@ func TestFindCommonItem(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(fmt.Sprint(test.input1, test.input2), func(t *testing.T) {
-			if result := FindCommonItem(test.input1, test.input2); result != test.expected {
+			if result, _ := FindCommonItem(test.input1, test.input2); result != test.expected {
 				t.Errorf("Got %s, expected %s", result, test.expected)
+			}
+		})
+	}
+}
+
+// test exception creation by the function
+func TestFindCommonItemError(t *testing.T) {
+	tests := []struct {
+		left, right string
+	}{
+		{
+			"abc",
+			"cde",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(fmt.Sprint(test.left, test.right), func(t *testing.T) {
+			if _, error := FindCommonItem(test.left, test.right); error != nil {
+				t.Errorf("Got %v, expected %v", error, nil)
 			}
 		})
 	}
