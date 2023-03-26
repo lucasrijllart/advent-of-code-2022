@@ -41,6 +41,16 @@ func GetRucksackDuplicateValue(rucksack string) int {
 	return GetItemPriority(common_item)
 }
 
+// find the common item between three ruckacks (the badge)
+func GetCommonBadge(first, second, third string) (string, error) {
+	for _, rune := range first {
+		if strings.ContainsRune(second, rune) && strings.ContainsRune(third, rune) {
+			return string(rune), nil
+		}
+	}
+	return "", errors.New("unable to find common item")
+}
+
 // calculate total duplicate item value for given file
 func p1() {
 	// file_path := "aoc/d3/test.txt"
@@ -54,11 +64,23 @@ func p1() {
 	fmt.Println(total)
 }
 
-// not used yet
+// gets the total value of every 3 rucksacks's badge
 func p2() {
-	//file_path := "aoc/d2/test.txt"
-	file_path := "aoc/d2/submission.txt"
-	os.ReadFile(file_path)
+	// file_path := "aoc/d3/test.txt"
+	file_path := "aoc/d3/submission.txt"
+	file, _ := os.Open(file_path)
+	scanner := bufio.NewScanner(file)
+	total := 0
+	for scanner.Scan() {
+		first := scanner.Text()
+		scanner.Scan()
+		second := scanner.Text()
+		scanner.Scan()
+		third := scanner.Text()
+		badge, _ := GetCommonBadge(first, second, third)
+		total = total + GetItemPriority(badge)
+	}
+	fmt.Println(total)
 }
 
 // main function to run the function given as argument
@@ -71,6 +93,6 @@ func main() {
 	case "p2":
 		p2()
 	default:
-		log.Fatal("Provide an existing function dammit")
+		log.Fatal("Provide an existing function darnit")
 	}
 }

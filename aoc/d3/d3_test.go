@@ -133,3 +133,32 @@ func TestGetRucksackDuplicateValue(t *testing.T) {
 		}
 	}
 }
+
+func TestGetCommonBadge(t *testing.T) {
+	tests := []struct {
+		first    string
+		second   string
+		third    string
+		expected string
+	}{
+		{
+			"vJrwpWtwJgWrhcsFMMfFFhFp",
+			"jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+			"PmmdzqPrVvPwwTWBwg",
+			"r",
+		},
+		{
+			"wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+			"ttgJtRGJQctTZtZT",
+			"CrZsJsPPZsGzwwsLwLmpwMDw",
+			"Z",
+		},
+	}
+
+	for _, test := range tests {
+		result, _ := GetCommonBadge(test.first, test.second, test.third)
+		if result != test.expected {
+			t.Errorf("Got %v, expected %v", result, test.expected)
+		}
+	}
+}
