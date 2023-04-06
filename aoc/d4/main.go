@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-// return true or false if there is or isn't a section that is fully contained in another
+// return true if there is a section that is fully contained in another
 func CheckOverlap(left, right string) bool {
 	leftMin, _ := strconv.Atoi(strings.Split(left, "-")[0])
 	leftMax, _ := strconv.Atoi(strings.Split(left, "-")[1])
@@ -23,6 +23,22 @@ func CheckOverlap(left, right string) bool {
 	return false
 }
 
+// return true if there is a section that has any overlap with another section
+func CheckAnyOverlap(left, right string) bool {
+	leftMin, _ := strconv.Atoi(strings.Split(left, "-")[0])
+	leftMax, _ := strconv.Atoi(strings.Split(left, "-")[1])
+	rightMin, _ := strconv.Atoi(strings.Split(right, "-")[0])
+	rightMax, _ := strconv.Atoi(strings.Split(right, "-")[1])
+
+	pair1 := []int{leftMin, leftMax}
+	pair2 := []int{rightMin, rightMax}
+
+	if pair1[0] > pair2[0] {
+		pair1, pair2 = pair2, pair1
+	}
+	return pair1[1] >= pair2[0]
+}
+
 func CountFullyContainedSections(assignments []string) int {
 	total := 0
 	for _, line := range assignments {
@@ -32,6 +48,17 @@ func CountFullyContainedSections(assignments []string) int {
 			total++
 		}
 		fmt.Println(line, contains)
+	}
+	return total
+}
+
+func CountAnyOverlap(assignments []string) int {
+	total := 0
+	for _, line := range assignments {
+		inputs := strings.Split(line, ",")
+		if CheckAnyOverlap(inputs[0], inputs[1]) {
+			total++
+		}
 	}
 	return total
 }
@@ -62,7 +89,7 @@ func p2() {
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-	total := CountFullyContainedSections(lines)
+	total := CountAnyOverlap(lines)
 	fmt.Println(total)
 }
 
