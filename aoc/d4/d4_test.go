@@ -31,6 +31,31 @@ func TestCheckOverlap(t *testing.T) {
 	}
 }
 
+// ensure that the function catches assignments where there is any overlap between the two sets
+func TestCheckAnyOverlap(t *testing.T) {
+	tests := []struct {
+		left     string
+		right    string
+		expected bool
+	}{
+		{"5-7", "7-9", true},
+		{"2-8", "3-7", true},
+		{"3-7", "2-8", true},
+		{"6-6", "4-6", true},
+		{"4-6", "6-6", true},
+		{"7-7", "12-96", false},
+	}
+
+	for _, test := range tests {
+		t.Run(test.left+","+test.right, func(t *testing.T) {
+			result := CheckAnyOverlap(test.left, test.right)
+			if result != test.expected {
+				t.Errorf("Got %v, expected %v", result, test.expected)
+			}
+		})
+	}
+}
+
 // ensure that the function counts the number of lines that have ranges that fully overlap
 func TestCountFullyContainedSections(t *testing.T) {
 	tests := []struct {
