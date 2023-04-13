@@ -26,12 +26,13 @@ func main() {
 
 // not used yet
 func p1() {
-	file_path := "aoc/d5/test.txt"
-	// file_path := "aoc/d4/submission.txt"
+	//file_path := "aoc/d5/test.txt"
+	file_path := "aoc/d5/submission.txt"
 	file, _ := os.ReadFile(file_path)
 	containers, moves := parseInput(string(file))
-	containers = MoveContainers(containers, moves)
-	fmt.Println(containers)
+	movedContainers := MoveContainers(containers, moves)
+	topContainers := GetTopContainers(movedContainers)
+	fmt.Println(topContainers)
 }
 
 // not used yet
@@ -85,6 +86,7 @@ func parseInput(file_input string) ([][]string, [][]int) {
 	return containers, moves
 }
 
+// given containers and a set of moves, execute the moves given and return the final containers
 func MoveContainers(containers [][]string, moves [][]int) [][]string {
 	for _, move := range moves {
 		containersToMove, from, to := move[0], move[1]-1, move[2]-1 // add offset to from
@@ -97,4 +99,13 @@ func MoveContainers(containers [][]string, moves [][]int) [][]string {
 		fmt.Printf("%v\n", move)
 	}
 	return containers
+}
+
+// return the top containers of each stack
+func GetTopContainers(containers [][]string) string {
+	var topContainers string
+	for _, stack := range containers {
+		topContainers = topContainers + stack[len(stack)-1]
+	}
+	return topContainers
 }

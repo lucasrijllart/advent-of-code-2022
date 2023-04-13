@@ -47,3 +47,19 @@ func TestMoveContainers(t *testing.T) {
 		t.Errorf("Containers are not the same: %v, expected %v", movedContainers, expectedContainers)
 	}
 }
+
+// ensure that the function returns the top containers of each stack
+func TestGetTopContainers(t *testing.T) {
+	containers := [][]string{
+		{"C"},
+		{"M"},
+		{"P", "D", "N", "Z"},
+	}
+	expectedTopContainers := "CMZ"
+
+	result := GetTopContainers(containers)
+
+	if result != expectedTopContainers {
+		t.Errorf("Containers are not the same: %v, expected %v", result, expectedTopContainers)
+	}
+}
