@@ -24,7 +24,7 @@ func main() {
 	}
 }
 
-// not used yet
+// read file, execute moves and print the top container of each stack
 func p1() {
 	//file_path := "aoc/d5/test.txt"
 	file_path := "aoc/d5/submission.txt"
@@ -50,6 +50,19 @@ func p2() {
 	// fmt.Println(total)
 }
 
+// convert the input file into Go data structures. Example:
+// A
+// B C
+// 1 2
+// move 1 from 1 to 2
+// ==
+// containers == [
+//
+//	["B", "A"]
+//	["C"]
+//
+// ]
+// moves == [ [1,1,2] ]
 func parseInput(file_input string) ([][]string, [][]int) {
 	parts := strings.Split(file_input, "\n\n")
 	fmt.Println(parts[1])
