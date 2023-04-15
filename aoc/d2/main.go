@@ -75,8 +75,7 @@ func GoThroughFile(input string, function part_function) int {
 		response := moves[1]
 		score := function(move, response)
 		total_score = total_score + score
-		fmt.Println("move", move, "response", response, "score",
-			score, "total", total_score)
+		//fmt.Println("move", move, "response", response, "score", score, "total", total_score)
 	}
 	return total_score
 }
@@ -99,7 +98,6 @@ func p2() {
 
 func main() {
 	function_name := os.Args[1]
-	fmt.Println(function_name)
 	funcs := map[string]func(){
 		"p1": p1,
 		"p2": p2,
