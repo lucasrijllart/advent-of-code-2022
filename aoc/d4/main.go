@@ -47,7 +47,7 @@ func CountFullyContainedSections(assignments []string) int {
 		if contains {
 			total++
 		}
-		fmt.Println(line, contains)
+		// fmt.Println(line, contains)
 	}
 	return total
 }

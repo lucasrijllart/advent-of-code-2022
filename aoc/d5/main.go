@@ -65,7 +65,7 @@ func p2() {
 // moves == [ [1,1,2] ]
 func parseInput(file_input string) ([][]string, [][]int) {
 	parts := strings.Split(file_input, "\n\n")
-	fmt.Println(parts[1])
+	//fmt.Println(parts[1])
 	containersList, movesList := strings.Split(parts[0], "\n"), strings.Split(parts[1], "\n")
 
 	var containers [][]string
@@ -107,9 +107,9 @@ func MoveContainers(containers [][]string, moves [][]int) [][]string {
 			container := containers[from][len(containers[from])-1]        // get value
 			containers[from] = containers[from][:len(containers[from])-1] // pop value
 			containers[to] = append(containers[to], container)
-			fmt.Printf("Moving %v from %v to %v \n", container, from, to)
+			//fmt.Printf("Moving %v from %v to %v \n", container, from, to)
 		}
-		fmt.Printf("%v\n", move)
+		//fmt.Printf("%v\n", move)
 	}
 	return containers
 }
