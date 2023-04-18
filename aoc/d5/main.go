@@ -35,19 +35,15 @@ func p1() {
 	fmt.Println(topContainers)
 }
 
-// not used yet
+// read file, execute moves with 9001 config and print top container of each stack
 func p2() {
-	// file_path := "aoc/d4/test.txt"
-	// file_path := "aoc/d4/submission.txt"
-	// file, _ := os.Open(file_path)
-	// defer file.Close()
-	// var lines []string
-	// scanner := bufio.NewScanner(file)
-	// for scanner.Scan() {
-	// 	lines = append(lines, scanner.Text())
-	// }
-	// total := CountAnyOverlap(lines)
-	// fmt.Println(total)
+	//file_path := "aoc/d5/test.txt"
+	file_path := "aoc/d5/submission.txt"
+	file, _ := os.ReadFile(file_path)
+	containers, moves := parseInput(string(file))
+	movedContainers := MoveContainers9001(containers, moves)
+	topContainers := GetTopContainers(movedContainers)
+	fmt.Println(topContainers)
 }
 
 // convert the input file into Go data structures. Example:
@@ -65,7 +61,6 @@ func p2() {
 // moves == [ [1,1,2] ]
 func parseInput(file_input string) ([][]string, [][]int) {
 	parts := strings.Split(file_input, "\n\n")
-	//fmt.Println(parts[1])
 	containersList, movesList := strings.Split(parts[0], "\n"), strings.Split(parts[1], "\n")
 
 	var containers [][]string
@@ -73,7 +68,6 @@ func parseInput(file_input string) ([][]string, [][]int) {
 
 	// looping through every 4th number starting with 1 so 1,5,9,... as that's the string index of where the stack is
 	for stackIndex := 1; stackIndex < len(containersList[0]); stackIndex = stackIndex + 4 {
-		//fmt.Println(stackIndex)
 		collectedContainers := []string{}
 		// go through stack reversed and skipping the first, so the number is skipped and then we move up
 		for containerIndex := len(containersList) - 2; containerIndex >= 0; containerIndex-- {
@@ -82,7 +76,6 @@ func parseInput(file_input string) ([][]string, [][]int) {
 				collectedContainers = append(collectedContainers, value)
 			}
 		}
-		//fmt.Printf("CC: %v\n", collectedContainers)
 		containers = append(containers, collectedContainers)
 	}
 
@@ -105,11 +98,9 @@ func MoveContainers(containers [][]string, moves [][]int) [][]string {
 		containersToMove, from, to := move[0], move[1]-1, move[2]-1 // add offset to from
 		for moving := 0; moving < containersToMove; moving++ {
 			container := containers[from][len(containers[from])-1]        // get value
-			containers[from] = containers[from][:len(containers[from])-1] // pop value
+			containers[from] = containers[from][:len(containers[from])-1] // remove value
 			containers[to] = append(containers[to], container)
-			//fmt.Printf("Moving %v from %v to %v \n", container, from, to)
 		}
-		//fmt.Printf("%v\n", move)
 	}
 	return containers
 }
@@ -121,4 +112,18 @@ func GetTopContainers(containers [][]string) string {
 		topContainers = topContainers + stack[len(stack)-1]
 	}
 	return topContainers
+}
+
+// given containers and a set of moves, execute the moves given and return the final containers
+// same as MoveContainers except this time it moves multiple containers at once rather than one
+// at the time.
+func MoveContainers9001(containers [][]string, moves [][]int) [][]string {
+	for _, move := range moves {
+		containersToMove, from, to := move[0], move[1]-1, move[2]-1 // add offset to from
+		stack := containers[from]
+		currentMove := stack[len(stack)-containersToMove:]
+		containers[from] = stack[:len(stack)-containersToMove] // remove value
+		containers[to] = append(containers[to], currentMove...)
+	}
+	return containers
 }
