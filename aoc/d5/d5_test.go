@@ -63,3 +63,19 @@ func TestGetTopContainers(t *testing.T) {
 		t.Errorf("Containers are not the same: %v, expected %v", result, expectedTopContainers)
 	}
 }
+
+// ensure that the function runs the moves on the stacks of containers correctly
+func TestMoveContainers9001(t *testing.T) {
+	file, _ := os.ReadFile("test.txt")
+	containers, moves := parseInput(string(file))
+	movedContainers := MoveContainers9001(containers, moves)
+	expectedContainers := [][]string{
+		{"M"},
+		{"C"},
+		{"P", "Z", "N", "D"},
+	}
+
+	if reflect.DeepEqual(movedContainers, expectedContainers) != true {
+		t.Errorf("Containers are not the same: %v, expected %v", movedContainers, expectedContainers)
+	}
+}
